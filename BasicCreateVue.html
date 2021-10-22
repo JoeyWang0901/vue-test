@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    
+</head>
+<body>
+    <div id="app">
+        單價:{{ price }},
+        數量:{{ quantity }},
+        總金額 {{ price * quantity }}元
+
+    </div>
+    <div id="app2">
+        <input type="text" v-model="name">
+    </div>
+    <div id="app3">
+        <input type="text" v-model="name">
+
+    </div>
+
+    <div id="app4">
+
+    </div>
+    <script>
+        const dataObj = {
+            name:'008JS'
+        };
+
+        const vm = Vue.createApp({
+            data(){
+                return{
+                    price: 100,
+                    quantity:10
+                }
+            }
+        });
+        const vMountedInstance = vm.mount('#app'); 
+        // vm.$data.price = 1000;
+        vMountedInstance.$data.price = 9999;
+
+        const vm2 = Vue.createApp({
+            data(){
+                return {...dataObj}
+            },
+        }).mount('#app2');
+
+        const vm3 = Vue.createApp({
+            data(){
+                return {...dataObj}
+            },
+        }).mount('#app3');
+
+        const vm4 = Vue.createApp({
+            template:`{{ greeting }}好棒棒`,
+            data(){
+                return {
+                    greeting:'Hello Vue.js!'
+                }
+            },
+        }).mount('#app4');
+    </script>
+</body>
+</html>

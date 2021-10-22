@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <p>總金額 {{ subtotal() }}元</p>
+        <p>總金額 {{ subtotal() }}元</p>
+        <p>總金額 {{ subtotal() }}元</p>
+    </div>
+    <div id="app2">
+        <p>總金額 {{ subtotal }}元</p>
+        <p>總金額 {{ subtotal }}元</p>
+        <p>總金額 {{ subtotal }}元</p>
+    </div>
+
+    <div id="app3">
+        <p>日幣 = 0.278 台幣</p>
+        <div>
+            <!-- <input type="text" v-model="twd" v-on:input="twd2jpy">. -->
+            台幣 <input type="text" v-model="twd">
+        </div>
+        <div>
+            <!-- <input type="text" v-model="jpy" v-on:input="jpy2twd"> -->
+            日幣 <input type="text" v-model="jpy">
+        </div>
+        <div>
+            <!-- <input type="text" v-model="jpy" v-on:input="jpy2twd"> -->
+            美金 <input type="text" v-model="usd">
+        </div>
+    </div>
+    <script>
+        const dataObj = {
+            name:'008JS'
+        };
+
+        const vm = Vue.createApp({
+            data(){
+                return{
+                    price: 100,
+                    quantity:10
+                }
+            },
+            methods:{
+                subtotal() {
+                    console.log('methods');
+                    return this.price * this.quantity;
+                }
+            }
+        }).mount('#app');
+
+        const vm2 = Vue.createApp({
+            data(){
+                return{
+                    price: 100,
+                    quantity:10
+                }
+            },
+            computed:{
+                subtotal() {
+                    console.log('computed');
+                    return this.price * this.quantity;
+                }
+            }
+        }).mount('#app2');
+
+        const vm3 = Vue.createApp({
+            data(){
+                return{
+                    twd:0.278,
+                    // jpy:1
+                }
+            },
+            // methods:{
+            //     twd2jpy() {
+            //         this.jpy = Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+            //     },
+            //     jpy2twd(){
+            //         this.twd = Number.parseFloat(Number(this.jpy) * 0.278).toFixed(3);
+            //     }
+            // }
+            computed: {
+                jpy: {
+                    get() {
+                        return Number.parseFloat(Number(this.twd) / 0.278).toFixed(3);
+                    },
+                    set(val) {
+                        this.twd = Number.parseFloat(Number(val) * 0.278).toFixed(3);
+                    }
+                },
+                usd: {
+                    get() {
+                        return Number.parseFloat(Number(this.twd) / 28.540).toFixed(3);
+                    },
+                    set(val) {
+                        this.twd = Number.parseFloat(Number(val) * 28.540).toFixed(3);
+                    }
+                }
+            }
+        }).mount('#app3');
+
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        #app {
+            display: block;
+            padding: 1rem;
+        }
+        a {
+            color: #3eaf7c;
+            text-decoration: none;
+        }
+
+        .pagination {
+            display: block;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .page-item {
+            cursor: pointer;
+            font-size: 1rem;
+            list-style: none;
+            display: block;
+            width: 40px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #c4ead9;
+            color: #3eaf7c;
+            float: left;
+            margin: 0;
+            margin-right: -1px;
+
+            
+        }
+        .page-item:hover {
+                background-color: #eee;
+            }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <label>
+            Choose One:<input type="radio" value="username"  v-model="loginType">
+            username
+        </label>
+
+        <label>
+            <input type="radio" value="email"  v-model="loginType">
+            email
+        </label>
+
+        <hr>
+
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input type="text" placeholder="Enter your username" key="username">
+        </template>
+
+        <template v-else>
+            <label>Email</label>
+            <input type="text" placeholder="Enter your email address" key="email">
+        </template>
+    </div>
+
+    <div id="app2"> 
+        <ul>
+            <li v-for="(item, index) in arr">{{index}}/{{ item }}</li>
+        </ul>
+    </div>
+
+    <div id="app3"> 
+        <ul class="pagination">
+            <li class="page-item" @click.prevent><a href="" class="page-link">&lt;</a></li>
+            <li class="page-item" v-for="page in numbers  " @click.prevent><a href="" class="page-link">{{ page }}</a></li>
+            <li class="page-item" @click.prevent><a href="" class="page-link">&gt;</a></li>
+        </ul>
+
+        <ul class="pagination">
+            <li class="page-item" @click.prevent><a href="" class="page-link">&lt;</a></li>
+            <li class="page-item" v-for="page in evenNumbers  " @click.prevent><a href="" class="page-link">{{ page }}</a></li>
+            <li class="page-item" @click.prevent><a href="" class="page-link">&gt;</a></li>
+        </ul>
+
+        <ul class="pagination">
+            <li class="page-item" @click.prevent><a href="" class="page-link">&lt;</a></li>
+            <li class="page-item" v-for="page in sortedNumbers  " @click.prevent><a href="" class="page-link">{{ page }}</a></li>
+            <li class="page-item" @click.prevent><a href="" class="page-link">&gt;</a></li>
+        </ul>
+    </div>
+
+    <div id="app4">
+        <div class="wrap">
+            <div class="todo-lists">
+                <h3>Todo List</h3>
+                <ul>
+                    <li v-for="i in todoLists" :key="i.id">
+                        <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="done-lists">
+                <h3>Done List</h3>
+                <li v-for="i in doneLists" :key="i.id">
+                    <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
+                </li>
+            </div>
+        </div>
+
+    </div>
+
+    
+       
+    <script>
+        const vm = Vue.createApp({
+            data(){
+                return{
+                    loginType: 'username'
+                }
+            }
+        }).mount('#app');
+
+        const vm2 = Vue.createApp({
+            data() {
+                return {
+                    arr:['008', 'JS', 'is', 'awesome']
+                }
+            }
+        }).mount('#app2');
+
+        const vm3 = Vue.createApp({
+            data() {
+                return {
+                    numbers:[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                }
+            },
+            computed:{
+                evenNumbers () {
+                    return this.numbers.filter(number => number % 2 === 0);
+                },
+                sortedNumbers () {
+                    return [...this.numbers].sort((a, b) =>  b - a);
+                }
+
+                
+            }
+        }).mount('#app3');
+
+        const vm4 = Vue.createApp({
+            data() {
+                return {
+                    lists:[{
+                            id: 'task001',
+                            title: '選項 1',
+                            isDone: false
+                        }, 
+                        {   
+                            id: 'task002',
+                            title: '選項 2',
+                            isDone: false
+                        },
+                        {
+                            id: 'task003',
+                            title: '選項 3',
+                            isDone: false
+                        },
+                    ]
+                }
+            },
+            computed:{
+                todoLists () {
+                    return this.lists.filter(d => !d.isDone);
+                },
+                doneLists () {
+                    return this.lists.filter(d => d.isDone);
+                }
+            }
+        }).mount('#app4');
+
+        
+    </script>
+</body>
+</html>
